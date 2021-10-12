@@ -1,0 +1,15 @@
+<div class="Container">
+    <h1>Welcome to Business Home Page</h1>
+
+    <h1>Business</h1>
+
+    <%= link_to "Create New Business",new_business_path %>
+
+
+    <% @businesses.each do |business| %>
+        
+        <p><%= business.name%></p>
+        <p><%= business.description%></p>
+        
+    <%end%>
+</div>
