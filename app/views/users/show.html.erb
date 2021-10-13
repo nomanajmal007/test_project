@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+  <% if !@user.business_users.blank? %>
+    <p>
+      <strong><%= @user.name %> invovled in Business:</strong>
+    </p>
+
+    <% Business.joins(:business_users).where("business_users.user_id = :address",:address=>@user.id).each do |b|%>
+        <%= b.name %>
+        <br>
+    <% end %>
+    
+  <% else %>
+    <h1> This User is not involed in any Business! </h1> 
+  <% end %>
+
+<%= link_to 'Edit', edit_business_path(@business) %> |
+<%= link_to 'Back', businesses_path %>

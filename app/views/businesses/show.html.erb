@@ -10,13 +10,20 @@
   <%= @business.description %>
 </p>
 
-<p>
-  <strong>Members:</strong>
-  <% @members.each do |m| %>
-    <%= m.name %>
-  <% end %>
-</p>
+  <% if !@business.business_users.blank? %>
+    <p>
+      <strong>Users of Business:</strong>
+      <%= @business.name %>
+    </p>
 
+    <% User.joins(:business_users).where("business_users.business_id = :address",:address=>@business.id).each do |b|%>
+        <%= b.name %>
+        <br>
+    <% end %>
+    
+  <% else %>
+    <h1> This Business have not any user yet! </h1> 
+  <% end %>
 
 <%= link_to 'Edit', edit_business_path(@business) %> |
 <%= link_to 'Back', businesses_path %>
