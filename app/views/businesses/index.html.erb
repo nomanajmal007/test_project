@@ -3,13 +3,31 @@
 
     <h1>Business</h1>
 
-    <%= link_to "Create New Business",new_business_path %>
 
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @businesses.each do |business| %>
+                <tr>
+                <th scope="row"><%="#{business.id}"%></th>
+                <td><%= business.name%></td>
+                <td><%= business.description%></td>
+                <td> 
+                    <%= link_to "Create",new_business_path, class: "btn btn-outline-success" %>
+                    <%= link_to "Edit",edit_business_path(business.id), class: "btn btn-outline-success" %>
+                    <%= link_to "Delete",business_path(business.id), method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-outline-success" %>
 
-    <% @businesses.each do |business| %>
-        
-        <p><%= business.name%></p>
-        <p><%= business.description%></p>
-        
-    <%end%>
+                </td>
+                </tr>
+            <%end%>
+        </tbody>
+    </table>
+
 </div>
