@@ -6,6 +6,9 @@ class User < ApplicationRecord
 
   validates_presence_of:name
 
+  has_many :business_users
+  has_many :businesses, through: :business_users
+
   def first_name
     self.name.split.first
   end

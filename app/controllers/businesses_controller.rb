@@ -7,16 +7,26 @@ class BusinessesController < ApplicationController
     end
     
     def show
+      @users=User.all;
+      @members=@business.BusinessUser.all
+      
     end
 
 
     def new
-        @business=Business.new
+        @business = Business.new
+        @users = User.all
     end
 
     def create
-        @business = Business.new(business_params)
+        @users = User.all
+        @business = Business.create!(business_params)
+        user_ids = params[:business][:user_ids].reject(&:empty?)
 
+        user_ids.each do |ui|
+          @business.business_users.create!(user_id: ui)
+        end
+        
         respond_to do |format|
           if @business.save
             format.html { redirect_to @business, notice: "Business was successfully created." }
@@ -34,10 +44,8 @@ class BusinessesController < ApplicationController
         respond_to do |format|
             if @business.update(business_params)
               format.html { redirect_to @business, notice: "Business was successfully updated." }
-              format.json { render :show, status: :ok, location: @business }
             else
               format.html { render :edit, status: :unprocessable_entity }
-              format.json { render json: @business.errors, status: :unprocessable_entity }
             end
           end
     end
@@ -45,6 +53,7 @@ class BusinessesController < ApplicationController
 
 
     def destroy
+        @business.business_users.destroy
         @business.destroy
         respond_to do |format|
           format.html { redirect_to businesses_url, notice: "Business was successfully destroyed." }
@@ -58,9 +67,9 @@ class BusinessesController < ApplicationController
       end
   
       # Only allow a list of trusted parameters through.
-      def business_params
-        params.require(:business).permit(:name, :description)
-      end
+    def business_params
+      params.require(:business).permit(:name, :description)
+    end
 
 
 end

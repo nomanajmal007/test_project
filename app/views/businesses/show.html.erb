@@ -2,13 +2,21 @@
 
 <p>
   <strong>Title:</strong>
-  <%= @business.title %>
+  <%= @business.name %>
 </p>
 
 <p>
   <strong>Body:</strong>
-  <%= @business.body %>
+  <%= @business.description %>
 </p>
+
+<p>
+  <strong>Members:</strong>
+  <% @members.each do |m| %>
+    <%= m.name %>
+  <% end %>
+</p>
+
 
 <%= link_to 'Edit', edit_business_path(@business) %> |
 <%= link_to 'Back', businesses_path %>
