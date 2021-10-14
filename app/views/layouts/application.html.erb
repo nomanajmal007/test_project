@@ -12,7 +12,6 @@
 
   <body>
 
-
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="<%=root_url%>">Test Project</a>
@@ -50,7 +49,14 @@
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
       <% if current_user.is_a?(User)%>
-       <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-success" %>
+        <% if current_user.admin?%>
+          <b class ="text-light px-2" > Admin </b>
+        <% elsif current_user.support?%>
+          <b class ="text-light px-2" > Support </b>
+        <% elsif current_user.writingbroker?%>
+          <b class ="text-light px-2" > Writing Broker </b>
+        <% end %>
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-success" %> 
       <% else %>
         <%= link_to "Login", new_user_session_path, class: "btn btn-outline-success" %>
         <%= link_to "Register", new_user_registration_path, class: "btn btn-outline-success"%>
@@ -58,8 +64,14 @@
     </div>
   </div>
 </nav>
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+
+  <% if !notice.blank? %>
+  <strong> <p class="notice"><%= notice %></p></strong>
+  <% end %>
+
+  <% if !alert.blank? %>
+    <strong><p class="alert"><%= alert %></p></strong>
+  <% end %>
 
   <div class="container" >
     <%= yield %>

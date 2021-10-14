@@ -2,13 +2,42 @@ class UsersController < ApplicationController
     before_action :set_user, only: %i[ show edit update destroy]
 
     def index
-        @users=User.all
+      @users=User.all
+      authorize @users 
     end
 
     def show
-        @users=User.all
-        @business=Business.all
+      @users=User.all
+      @business=Business.all
+      authorize @users 
     end
+
+    def new
+      @user=User.new
+      authorize @user
+    end
+
+    def create
+      
+      @user = User.create!(user_params)
+      authorize @user
+      respond_to do |format|
+        if @user.save
+          format.html { redirect_to @user, notice: "User was successfully created." }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+        end
+      end
+    end
+
+    def destroy
+      @user.business_users.destroy
+      @user.destroy
+      respond_to do |format|
+        format.html { redirect_to users_url, notice: "User was successfully destroyed." }
+      end
+    end
+
 
     private
     def set_user
@@ -16,7 +45,7 @@ class UsersController < ApplicationController
       end
 
     def user_params
-      params.require(:user).permit(:name, :email, :user_ids)
+      params.require(:user).permit(:name, :email)
     end
 
 

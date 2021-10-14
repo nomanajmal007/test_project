@@ -53,11 +53,11 @@ class BusinessesController < ApplicationController
 
 
     def destroy
-        @business.business_users.destroy
-        @business.destroy
-        respond_to do |format|
-          format.html { redirect_to businesses_url, notice: "Business was successfully destroyed." }
-        end
+      @business.business_users.destroy
+      @business.destroy
+      respond_to do |format|
+        format.html { redirect_to businesses_url, notice: "Business was successfully destroyed." }
+      end
     end
 
 

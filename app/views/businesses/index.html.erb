@@ -1,12 +1,16 @@
 <div class="Container">
+
+    
+    <h1 class="my-3">Hi, <%= current_user.first_name%> </h1>
+
     <h1>Welcome to Business Home Page</h1>
 
-    <h1>Business</h1>
-
+    <br>
     <%= link_to "Create a new business",new_business_path, class: "btn btn-outline-success" %>
-
-
-
+    <br>
+    <br>
+    <br>
+    <h2>Business:</h2>
     <table class="table">
         <thead>
             <tr>

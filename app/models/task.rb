@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
     
-    has_one :Business
+    belongs_to :Business
     
 end
