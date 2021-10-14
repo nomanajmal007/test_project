@@ -3,10 +3,11 @@ class BusinessesController < ApplicationController
 
 
     def index
-        @businesses=Business.all
+      @businesses = current_user.businesses
     end
-    
+
     def show
+      authorize @business
       @users=User.all;
       # @members=@business.BusinessUser.all
       
@@ -15,20 +16,23 @@ class BusinessesController < ApplicationController
 
     def new
         @business = Business.new
+        authorize @business
         @users = User.all
     end
 
     def create
       @users = User.all
-      @business = Business.create!(business_params)
-      user_ids = params[:business][:user_ids].reject(&:empty?)
+      @business = Business.new(business_params)
+      @business.owner= current_user
+      @business.business_users.build(user_id: current_user.id)
 
+      user_ids = params[:business][:user_ids].reject(&:empty?)
       user_ids.each do |ui|
-        @business.business_users.create!(user_id: ui)
+        @business.business_users.build(user_id: ui)
       end
       
       respond_to do |format|
-        if @business.save
+        if @business.save!
           format.html { redirect_to @business, notice: "Business was successfully created." }
         else
           format.html { render :new, status: :unprocessable_entity }
@@ -68,7 +72,7 @@ class BusinessesController < ApplicationController
   
       # Only allow a list of trusted parameters through.
     def business_params
-      params.require(:business).permit(:name, :description, :user_ids)
+      params.require(:business).permit(:name, :description, :owner)
     end
 
 
