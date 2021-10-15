@@ -14,13 +14,17 @@ class TasksController < ApplicationController
       
     end
 
+    def show
+      authorize Task
+    end
+
     def create
       @task = Task.new(task_params)
       respond_to do |format|
         if @task.save
           format.html { redirect_to @task, notice: "Task was successfully created." }
         else
-          format.html { render :new, status: :unprocessable_entity }
+          format.html { redirect_to @task, notice: "Validation Error" }
         end
       end
     end
