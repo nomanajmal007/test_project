@@ -3,7 +3,7 @@ class BusinessesController < ApplicationController
 
 
     def index
-      @businesses = current_user.businesses
+      @businesses = Business.all
       authorize Business
     end
 
@@ -47,6 +47,7 @@ class BusinessesController < ApplicationController
 
 
     def edit
+      authorize @business
     end
 
     def update
@@ -62,6 +63,7 @@ class BusinessesController < ApplicationController
 
 
     def destroy
+      authorize @business
       @business.business_users.destroy
       @business.destroy
       respond_to do |format|

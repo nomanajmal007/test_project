@@ -1,22 +1,42 @@
 <h1>Create a new User</h1>
 
 
-<%= form_for(@user) do |form| %>
+<%= form_for(@user) do |f| %>
 
     <div class="field">
-      <%= form.label :name %>
-      <%= form.text_field :name , required: true %>
+      <%= f.label :name %>
+      <%= f.text_field :name , required: true %>
     </div>
 
     <div class="field">
-        <%= form.label :email %>
-        <%= form.email_field :email, autofocus: true, autocomplete: "email", required: true %>
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true %>
     </div>
+
+
+    <div class="field">
+      <%= f.label :user_type %>
+      <%= f.select :user_type, options_for_select(User.user_types.map {|k, v| [k.humanize.capitalize, k]}) %>
+      </div>
+
+    <div class="field">
+      <%= f.label :password %>
+      <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %><br />
+     <%= f.password_field :password, autocomplete: "new-password" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+
 
     
   
     <div class="actions">
-      <%= form.submit %>
+      <%= f.submit %>
     </div>
 
   <% end %>

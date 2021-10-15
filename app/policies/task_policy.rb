@@ -1,8 +1,10 @@
-class BusinessPolicy < ApplicationPolicy
-  def initialize(user, business)
-    @user = user
-    @business = business
+class TaskPolicy < ApplicationPolicy
+  class Scope < Scope
+    def resolve
+      scope.all
+    end
   end
+
 
   def index?
     true
@@ -16,7 +18,7 @@ class BusinessPolicy < ApplicationPolicy
 
 
   def edit?
-    check
+    @user.admin? || @user.writingbroker?
   end
 
 
@@ -34,18 +36,8 @@ class BusinessPolicy < ApplicationPolicy
   end
 
   def destroy?
-    check
+    @user.admin? || @user.writingbroker?
   end
-
-  private
-  def check
-    if @user.admin?
-      true
-    elsif @user.writingbroker?
-      @business.business_users.where(user_id:  @user.id).present?
-    end
-  end
-  
 
 
 end

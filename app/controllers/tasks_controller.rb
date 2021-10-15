@@ -3,18 +3,21 @@ class TasksController < ApplicationController
 
 
     def index
-        @tasks=Task.all
+      authorize Task
+      @tasks=Task.all
+      
     end
 
     def new
-        @task = Task.new
-       
+      authorize Task
+      @task = Task.new
+      
     end
 
     def create
       @task = Task.new(task_params)
       respond_to do |format|
-        if @task.save!
+        if @task.save
           format.html { redirect_to @task, notice: "Task was successfully created." }
         else
           format.html { render :new, status: :unprocessable_entity }
@@ -23,6 +26,7 @@ class TasksController < ApplicationController
     end
 
     def destroy
+      authorize Task
         @task.destroy
         respond_to do |format|
           format.html { redirect_to tasks_url, notice: "Task was successfully destroyed." }
@@ -30,6 +34,7 @@ class TasksController < ApplicationController
     end
 
     def edit
+      authorize Task
     end
 
     def update
