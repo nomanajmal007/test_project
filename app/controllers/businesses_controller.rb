@@ -4,6 +4,7 @@ class BusinessesController < ApplicationController
 
     def index
       @businesses = current_user.businesses
+      authorize Business
     end
 
     def show
@@ -27,8 +28,12 @@ class BusinessesController < ApplicationController
       @business.business_users.build(user_id: current_user.id)
 
       user_ids = params[:business][:user_ids].reject(&:empty?)
+      user_ids.delete(current_user.id)
+
+      puts current_user.id
+
       user_ids.each do |ui|
-        @business.business_users.build(user_id: ui)
+          @business.business_users.build(user_id: ui)
       end
       
       respond_to do |format|

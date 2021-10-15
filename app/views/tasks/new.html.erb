@@ -1,0 +1,37 @@
+<h1>Create a new Task</h1>
+
+
+<%= form_for(@task) do |form| %>
+    <div class="field">
+      <%= form.label :title %>
+      <%= form.text_field :title , required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :due_date %>
+      <%= form.date_field :due_date,value: Date.current,min: Date.today%>
+    </div>
+
+    <div class="field">
+        <%= form.label "Task_type" %> <br/>
+        <%= form.select(:task_type, options_for_select([['Feature','feature'],['Bug','bug']]),{include_blank: true}) %>
+        <br>
+    </div>
+
+    <div class="field">
+       <%= form.label "Select Business" %> <br/>
+       <%= form.select :business_id, Business.all.map{|p| [p.name, p.id]}, {prompt: "Please select"} ,{ required: true }%>
+        <br>
+    </div>
+
+    <div class="field">
+    <%= form.label "Image" %><br />
+    <%= form.file_field :image %>
+    </div>
+  
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+
+  <% end %>
+  
