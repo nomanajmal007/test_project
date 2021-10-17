@@ -51,3 +51,4 @@ gem 'devise', '~> 4.8'
 gem "rolify"
 gem "pundit"
 gem 'carrierwave', '~> 2.0'
+gem 'jquery-rails'

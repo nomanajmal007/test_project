@@ -1,8 +1,11 @@
 class UsersController < ApplicationController
+  
     before_action :set_user, only: %i[ show edit update destroy]
+    
 
     def index
       @users=User.all
+      @user=User.new
       authorize @users 
     end
 
@@ -10,6 +13,14 @@ class UsersController < ApplicationController
       @users=User.all
       @business=Business.all
       @task=Task.all
+    end
+
+    def get_businesses
+      @users=User.all
+      @businesses = Business.users(params[:make])
+      render :update do |page|
+      page.replace_html('getbusinessesdiv', :partial => 'getbusinesses')
+      end
     end
 
     def new

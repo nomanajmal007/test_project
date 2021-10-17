@@ -9,6 +9,12 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
 
+
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+$(document).on("ajax:success", "#messages", function(event, data, status, xhr) {
+    alert("Form submitted, thank you!");
+});
+
