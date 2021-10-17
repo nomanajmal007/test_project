@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
     def get_businesses
       @users=User.all
-      @businesses = Business.users(params[:make])
+      @businesses = Business.users(params[:user_id])
       render :update do |page|
       page.replace_html('getbusinessesdiv', :partial => 'getbusinesses')
       end
