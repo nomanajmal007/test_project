@@ -5,10 +5,12 @@
 
     <%= link_to "Create a new User",new_user_path, class: "btn btn-outline-success" %>
 
-    
-    <%= form_for @user, remote: true do |f| %>
-        <%= f.submit %> 
-    <% end %>
+    <%= form_tag({:controller => 'users', :action => 'my_data'},:id => 'filter_form', :remote => true, method: :GET) do %>
+
+       <%= submit_tag 'save', :name => 'commit'%>
+    <%end%>
+
+  
 
     <table class="table">
         <thead>

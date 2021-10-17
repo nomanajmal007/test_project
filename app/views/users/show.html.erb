@@ -15,7 +15,7 @@
       <strong><%= @user.name %> invovled in Business:</strong>
     </p>
 
-    <% Business.joins(:business_users).where("business_users.user_id = :address",:address=>@user.id).each do |b|%>
+    <% @user.businesses.each do |b|%>
         <%= b.name %>
         <br>
     <% end %>

@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   resources :businesses
   resources :tasks
   root to: 'pages#index'
+  get '/users/my_data', to: 'users#my_data', as: 'users_my_data'
+
+
 
   # devise_for :users, controllers: {
   #   sessions: 'users/sessions'

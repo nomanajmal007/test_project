@@ -9,10 +9,16 @@ class UsersController < ApplicationController
       authorize @users 
     end
 
+    def my_data
+      @businesses=Business.users
+      respond_to do |format|
+        format.js
+      end
+    end
+
     def show
       @users=User.all
       @business=Business.all
-      @task=Task.all
     end
 
     def get_businesses
