@@ -3,7 +3,12 @@ class BusinessesController < ApplicationController
 
 
     def index
-      @businesses = current_user.businesses
+      authorize Business
+      if current_user.admin?
+        @businesses = Business.all
+      else
+        @businesses = current_user.businesses
+      end
     end
 
     def show
@@ -26,9 +31,14 @@ class BusinessesController < ApplicationController
       @business.owner= current_user
       @business.business_users.build(user_id: current_user.id)
 
+      puts current_user.id
       user_ids = params[:business][:user_ids].reject(&:empty?)
-      user_ids.each do |ui|
-        @business.business_users.build(user_id: ui)
+      user_ids.each do |v|
+        debugger
+        puts v
+        if v != user_id 
+         @business.business_users.build(user_id: v)
+        end
       end
       
       respond_to do |format|
