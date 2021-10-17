@@ -50,3 +50,4 @@ gem 'friendly_id', '~> 5.4.0'
 gem 'devise', '~> 4.8'
 gem "rolify"
 gem "pundit"
+gem 'carrierwave', '~> 2.0'

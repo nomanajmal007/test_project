@@ -3,12 +3,8 @@ class BusinessesController < ApplicationController
 
 
     def index
+      @businesses = Business.all
       authorize Business
-      if current_user.admin?
-        @businesses = Business.all
-      else
-        @businesses = current_user.businesses
-      end
     end
 
     def show
@@ -22,23 +18,22 @@ class BusinessesController < ApplicationController
     def new
         @business = Business.new
         authorize @business
-        @users = User.all
+        @users = User.where.not(:id=>current_user.id)
     end
 
     def create
-      @users = User.all
       @business = Business.new(business_params)
       @business.owner= current_user
       @business.business_users.build(user_id: current_user.id)
 
       puts current_user.id
       user_ids = params[:business][:user_ids].reject(&:empty?)
-      user_ids.each do |v|
-        debugger
-        puts v
-        if v != user_id 
-         @business.business_users.build(user_id: v)
-        end
+      user_ids.delete(current_user.id)
+
+      puts current_user.id
+
+      user_ids.each do |ui|
+          @business.business_users.build(user_id: ui)
       end
       
       respond_to do |format|
@@ -52,6 +47,7 @@ class BusinessesController < ApplicationController
 
 
     def edit
+      authorize @business
     end
 
     def update
@@ -67,6 +63,7 @@ class BusinessesController < ApplicationController
 
 
     def destroy
+      authorize @business
       @business.business_users.destroy
       @business.destroy
       respond_to do |format|

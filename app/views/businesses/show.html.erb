@@ -10,20 +10,41 @@
   <%= @business.description %>
 </p>
 
+<p>
+  <strong>Creator of Business : </strong>
+  <br>
+  <%= @business.owner.name %>
+</p>
+
   <% if !@business.business_users.blank? %>
     <p>
       <strong>Users of Business:</strong>
-      <%= @business.name %>
     </p>
-
-    <% User.joins(:business_users).where("business_users.business_id = :address",:address=>@business.id).each do |b|%>
+    <%  @business.users.each do |b|%>
         <%= b.name %>
         <br>
     <% end %>
-    
   <% else %>
     <h1> This Business have not any user yet! </h1> 
   <% end %>
+
+  <br>
+
+  <% if !@business.tasks.blank?%>
+    <p>
+      <strong>Tasks of Business:</strong>
+      <br>
+    </p>
+
+    <% @business.tasks.each do |b|%>
+        <%= b.title %>
+        <br>
+        <br>
+    <% end %>
+  <% else %>
+    <h1> This Business have not any assigned tasks yet! </h1> 
+  <% end %>
+
 
 <%= link_to 'Edit', edit_business_path(@business) %> |
 <%= link_to 'Back', businesses_path %>

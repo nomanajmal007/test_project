@@ -12,15 +12,15 @@
       <%= form.text_field :description %>
     </div>
 
-
+    
 
     <div class="field">
-      <%= form.select :user_ids, @users.map{ |u| ["#{u.name}(#{u.id})", u.id] } , {prompt: "Select Users"}, {:multiple => true, class: "input-lg"} %>
+      <%= form.select :user_ids, @users.map{ |u|  ["#{u.name}(#{u.id})", u.id] }   , {prompt: "Select Members"}, {:multiple => true, class: "input-lg"} %>
     </div>
   
     <div class="actions">
       <%= form.submit %>
     </div>
 
-  <% end %>
-  
+<% end %>
+

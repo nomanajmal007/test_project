@@ -5,7 +5,7 @@ class BusinessPolicy < ApplicationPolicy
   end
 
   def index?
-    @user.admin? || @user.writingbroker? || @user.support?
+    true
   end
 
 
@@ -19,36 +19,31 @@ class BusinessPolicy < ApplicationPolicy
     check
   end
 
-  def destroy?
-    check
-  end
-
 
   def show?
-    check
     #  @user.writingbroker? ?  @business.owner == @user : @user.admin?
-    #@user.writingbroker? ?  @business.business_users.where(user_id:  @user.id).present? : @user.admin?
-    # if @user.writingbroker?  || 
-    #   if @business.business_users.where(user_id:  @user.id).present? 
-    #     true
-    #   end
-    #   if @business.owner == @user
-    #     true
-    #   end
-    # end
+    #@user.writingbroker? || @user.support? ?  @business.business_users.where(user_id:  @user.id).present? : @user.admin?
+
+    if @user.admin?
+      true
+    elsif @user.support? || @user.writingbroker?
+      @business.business_users.where(user_id:  @user.id).present?
+    end
+
 
   end
 
   def destroy?
+    check
   end
-
 
   private
-
   def check
-    @user.writingbroker? ? @business.business_users.where(user_id:  @user.id).present? : @user.admin?
+    if @user.admin?
+      true
+    elsif @user.writingbroker?
+      @business.business_users.where(user_id:  @user.id).present?
+    end
   end
-
-
 
 end

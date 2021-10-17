@@ -9,18 +9,16 @@ class UsersController < ApplicationController
     def show
       @users=User.all
       @business=Business.all
-      authorize @users 
+      @task=Task.all
     end
 
     def new
       @user=User.new
-      authorize @user
     end
 
     def create
       
       @user = User.create!(user_params)
-      authorize @user
       respond_to do |format|
         if @user.save
           format.html { redirect_to @user, notice: "User was successfully created." }
@@ -45,7 +43,7 @@ class UsersController < ApplicationController
       end
 
     def user_params
-      params.require(:user).permit(:name, :email)
+      params.require(:user).permit(:name, :email, :user_type, :password, :password_confirmation)
     end
 
 
