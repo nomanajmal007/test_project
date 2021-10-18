@@ -3,8 +3,14 @@ class BusinessesController < ApplicationController
 
 
     def index
-      @businesses = Business.all
       authorize Business
+      if(current_user.admin?)
+          @businesses = Business.all
+      elsif(current_user.support? || current_user.writingbroker? )
+          @businesses = current_user.businesses
+      end
+
+
     end
 
     def show

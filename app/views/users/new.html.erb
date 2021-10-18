@@ -17,7 +17,7 @@
     <div class="field">
       <%= f.label :user_type %>
       <%= f.select :user_type, options_for_select(User.user_types.map {|k, v| [k.humanize.capitalize, k]}) %>
-      </div>
+        </div>
 
     <div class="field">
       <%= f.label :password %>

@@ -1,0 +1,13 @@
+<h1>Businesses of User</h1>
+<%= select_tag  :first_select, # name of selectbox
+      options_from_collection_for_select(@users, "id", "name"), # your options for this select box
+      include_blank: true,
+      remote: true,
+      :'data-url' => url_for(:controller => 'users', :action => 'show_businesses'), # we get the data from here!
+      :'data-type' => 'json', # tell jQuery to parse the response as JSON!
+      :onchange =>'$(this.form).submit()'
+%>
+
+<div id="get_businesses">
+        
+</div>

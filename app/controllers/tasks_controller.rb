@@ -3,8 +3,14 @@ class TasksController < ApplicationController
 
 
     def index
-      authorize Task    
-      @tasks=Task.all
+      authorize Task   
+      @tasks = Task.all 
+      # if(current_user.admin?)
+      #   @tasks = Task.all
+      # elsif(current_user.support? || current_user.writingbroker? )
+      #   @task = current_user.businesses
+        
+      # end
       
     end
 
@@ -15,7 +21,7 @@ class TasksController < ApplicationController
     end
 
     def show
-        authorize Task
+        authorize @task
     end
 
     def create
@@ -24,7 +30,7 @@ class TasksController < ApplicationController
         if @task.save
           format.html { redirect_to @task, notice: "Task was successfully created." }
         else
-          format.html { redirect_to @task, notice: "Validation Error" }
+          format.html { redirect_to @task, notice: "Validation Error : Task already exists" }
         end
       end
     end

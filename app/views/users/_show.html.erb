@@ -1,0 +1,10 @@
+<p>
+   <strong>Businesses of User <%=@user.name%> is:</strong>
+   <br>
+   <% @user.businesses.each do |b|%>
+        <%= b.name %>
+        <br>
+    <% end %>
+</p>
+
+<%= link_to 'Back', users_path %>

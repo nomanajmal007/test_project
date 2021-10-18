@@ -1,16 +1,18 @@
 <div class="Container">
     <h1>Welcome to Users Home Page</h1>
 
+
+    
+
+    <div id="get_businesses">
+        
+    </div>
+
+
+
     <h1>Users</h1>
 
     <%= link_to "Create a new User",new_user_path, class: "btn btn-outline-success" %>
-
-    <%= form_tag({:controller => 'users', :action => 'my_data'},:id => 'filter_form', :remote => true, method: :GET) do %>
-
-       <%= submit_tag 'save', :name => 'commit'%>
-    <%end%>
-
-  
 
     <table class="table">
         <thead>
@@ -29,6 +31,7 @@
                 <td><%= user.email%></td>
                 <td> 
                     <%= link_to "Details",user_path(user.id), class: "btn btn-outline-success" %>
+                    <%= link_to 'Show', user, remote: true, class: "btn btn-outline-success"  %>
                     <%= link_to "Delete",user_path(user.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-success" %>
                 </td>
                 </tr>

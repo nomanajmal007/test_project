@@ -1,33 +1,42 @@
 class UsersController < ApplicationController
   
     before_action :set_user, only: %i[ show edit update destroy]
+
     
 
     def index
       @users=User.all
-      @user=User.new
       authorize @users 
     end
 
-    def my_data
-      @businesses=Business.users
-      respond_to do |format|
-        format.js
-      end
-    end
+    
 
     def show
       @users=User.all
       @business=Business.all
+      puts "hahahahahahahah"
+      # respond_to do |format|
+      #   format.js {render layout: false} # Add this line to you respond_to block
+      # end
+    end
+
+
+
+    def show_businesses
+      @users=User.all
+      @business=Business.all
+      puts "hahahahahahahah"
+      respond_to do |format|
+        format.js {render layout: false} # Add this line to you respond_to block
+      end
     end
 
     def get_businesses
       @users=User.all
-      @businesses = Business.users(params[:user_id])
-      render :update do |page|
-      page.replace_html('getbusinessesdiv', :partial => 'getbusinesses')
-      end
+      puts "hahahahahahahah"
     end
+
+
 
     def new
       @user=User.new
@@ -55,13 +64,13 @@ class UsersController < ApplicationController
 
 
     private
-    def set_user
-        @user = User.find(params[:id])
-      end
+      def set_user
+          @user = User.find(params[:id])
+        end
 
-    def user_params
-      params.require(:user).permit(:name, :email, :user_type, :password, :password_confirmation)
-    end
+      def user_params
+        params.require(:user).permit(:name, :email, :user_type, :password, :password_confirmation)
+      end
 
 
 end

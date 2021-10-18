@@ -4,6 +4,17 @@ class BusinessPolicy < ApplicationPolicy
     @business = business
   end
 
+  class Scope < Scope
+    def resolve
+      # some scope
+    end
+
+    def resolve_show
+      #scope for show action 
+      # E.g scope.all
+    end
+  end
+
   def index?
     true
   end

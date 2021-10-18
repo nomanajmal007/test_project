@@ -23,7 +23,12 @@ class TaskPolicy < ApplicationPolicy
 
 
   def show?
-    @user.admin? || @user.writingbroker? || @user.support?
+    true
+    # if @user.admin?
+    #   true
+    # elsif @user.support? || @user.writingbroker?
+    #   Business.find(@task.business_id).business_users.where(user_id:  @user.id).present?
+    # end
 
   end
 
